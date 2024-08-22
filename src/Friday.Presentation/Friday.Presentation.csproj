@@ -8,6 +8,11 @@
 
     <ItemGroup>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.1" />
+        <PackageReference Include="Utconnect.Common.Exceptions" Version="1.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Friday.Infrastructure\Friday.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
