@@ -16,8 +16,8 @@ public class FridayDbContext(
     public DbSet<Column> Columns => Set<Column>();
     public DbSet<ColumnRule> ColumnRules => Set<ColumnRule>();
     public DbSet<Rule> Rules => Set<Rule>();
+    public DbSet<Sheet> Sheets => Set<Sheet>();
     public DbSet<Template> Templates => Set<Template>();
-    public DbSet<TemplateVersion> Versions => Set<TemplateVersion>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -52,7 +52,7 @@ public class FridayDbContext(
             {
                 Id = 2,
                 Name = "Type",
-                Code = RuleType.Type,
+                Code = RuleType.DataType,
                 Description = "The field should not be specific type"
             }
         ]);

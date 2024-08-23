@@ -6,7 +6,10 @@ namespace Friday.Domain.Entities;
 public class Template : BaseAuditableEntity<int>
 {
     [MaxLength(100)]
-    public required string Name { get; set; }
+    public required string Code { get; set; }
 
-    public virtual IEnumerable<TemplateVersion> Versions { get; set; } = [];
+    [MaxLength(100)]
+    public required string Name { get; set; }
+    
+    public int ColumnsCount { get; set; }
 }

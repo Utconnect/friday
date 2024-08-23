@@ -13,8 +13,8 @@ public class Column : BaseEntity<int>
     [MaxLength(1000)]
     public string? Description { get; set; }
 
-    public int VersionId { get; set; }
-    public virtual required TemplateVersion Version { get; set; }
+    public int TemplateId { get; set; }
+    public virtual Template? Template { get; set; }
 
     public virtual IEnumerable<ColumnRule> ColumnRules { get; set; } = [];
 }

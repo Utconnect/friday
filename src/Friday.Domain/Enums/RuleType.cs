@@ -3,5 +3,5 @@
 public enum RuleType
 {
     NotEmpty,
-    Type
+    DataType
 }

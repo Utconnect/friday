@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Friday.Application\Friday.Application.csproj" />
       <ProjectReference Include="..\Friday.Infrastructure\Friday.Infrastructure.csproj" />
     </ItemGroup>
 

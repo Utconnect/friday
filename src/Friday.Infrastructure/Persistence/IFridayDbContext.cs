@@ -11,8 +11,8 @@ public interface IFridayDbContext
     DbSet<Column> Columns { get; }
     DbSet<ColumnRule> ColumnRules { get; }
     DbSet<Rule> Rules { get; }
+    DbSet<Sheet> Sheets { get; }
     DbSet<Template> Templates { get; }
-    DbSet<TemplateVersion> Versions { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = new());
 

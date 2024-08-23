@@ -1,6 +1,6 @@
 ﻿using Friday.Domain.Entities;
 
-namespace Friday.Application.Validation;
+namespace Friday.Application.Services.CellValidator;
 
 public interface ICellValidator
 {

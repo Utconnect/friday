@@ -8,6 +8,16 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Friday.Domain\Friday.Domain.csproj" />
+      <ProjectReference Include="..\Friday.Infrastructure\Friday.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="ClosedXML" Version="0.102.3" />
+      <PackageReference Include="Utconnect.Common.MediatR" Version="1.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="UseCases\" />
     </ItemGroup>
 
 </Project>
