@@ -2,14 +2,15 @@
 using Friday.Domain.Entities;
 using Friday.Domain.Enums;
 using Friday.Domain.MetaData;
+using Friday.Domain.MetaData.Abstracts;
 
 namespace Friday.Application.Services.CellValidator;
 
-public class CellValidator : ICellValidator
+public partial class CellValidator : ICellValidator
 {
     public List<CellError>? Validate(Cell cell)
     {
-        if (!cell.Column.ColumnRules.Any())
+        if (cell.Column == null || !cell.Column.ColumnRules.Any())
         {
             return null;
         }
@@ -34,30 +35,36 @@ public class CellValidator : ICellValidator
     {
         return columnRule.Rule.Code switch
         {
-            RuleType.NotEmpty => NotEmptyRule(cell),
+            RuleType.And => AndRule(cell, columnRule.MetaData),
+            RuleType.Or => OrRule(cell, columnRule.MetaData),
             RuleType.DataType => DataTypeRule(cell, columnRule.MetaData),
+            RuleType.NotEmpty => NotEmptyRule(cell),
             _ => true
         };
     }
 
-    private static bool NotEmptyRule(Cell cell)
+    private static bool IsValid(Cell cell, JsonDocument? metaData)
     {
-        return !string.IsNullOrEmpty(cell.Value);
-    }
-
-    private static bool DataTypeRule(Cell cell, JsonDocument? metaData)
-    {
-        DataTypeRuleMetaData? parsedMetaData = metaData?.Deserialize<DataTypeRuleMetaData>();
-        if (parsedMetaData == null)
+        if (metaData == null)
         {
             return true;
         }
+        
+        string? ruleName = metaData.RootElement.GetProperty(nameof(IRuleMetaData.RuleName)).GetString();
+        JsonElement subMetaData = metaData.RootElement.GetProperty("MetaData");
 
-        return parsedMetaData.Type switch
+        if (ruleName == null)
         {
-            RuleDataType.Int => int.TryParse(cell.Value, out int _),
-            RuleDataType.Double => double.TryParse(cell.Value, out double _),
-            _ => false
+            throw new ArgumentOutOfRangeException(ruleName);
+        }
+
+        return ruleName switch
+        {
+            nameof(AndRuleMetaData) => AndRule(cell, subMetaData),
+            nameof(OrRuleMetaData) => OrRule(cell, subMetaData),
+            nameof(DataTypeRuleMetaData) => DataTypeRule(cell, subMetaData),
+            nameof(NotEmptyRuleMetaData) => NotEmptyRule(cell),
+            _ => throw new ArgumentOutOfRangeException(ruleName)
         };
     }
 }

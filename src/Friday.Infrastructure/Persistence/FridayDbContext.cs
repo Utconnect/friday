@@ -44,13 +44,27 @@ public class FridayDbContext(
             new Rule
             {
                 Id = 1,
+                Name = "And",
+                Code = RuleType.And,
+                Description = "Combine multiple conditions"
+            },
+            new Rule
+            {
+                Id = 2,
+                Name = "Or",
+                Code = RuleType.Or,
+                Description = "At least on of multiple conditions"
+            },
+            new Rule
+            {
+                Id = 3,
                 Name = "NotEmpty",
                 Code = RuleType.NotEmpty,
                 Description = "The field should not be empty"
             },
             new Rule
             {
-                Id = 2,
+                Id = 4,
                 Name = "Type",
                 Code = RuleType.DataType,
                 Description = "The field should not be specific type"

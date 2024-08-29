@@ -2,6 +2,8 @@
 
 public enum RuleType
 {
+    And,
+    Or,
     NotEmpty,
     DataType
 }
