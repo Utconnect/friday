@@ -1,9 +1,11 @@
 using Friday.Application;
+using Friday.Infrastructure;
 using Friday.Presentation;
 using Utconnect.Common.Exceptions.Filters;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddInfrastructureServices();
 builder.Services.AddApplicationServices();
 
 builder.Services.AddControllers();

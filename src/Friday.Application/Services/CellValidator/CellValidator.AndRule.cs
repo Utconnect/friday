@@ -15,7 +15,7 @@ public partial class CellValidator
             return true;
         }
 
-        return parsedMetaData.Rules.All(combinationRuleMetaData => IsValid(cell, combinationRuleMetaData.MetaData));
+        return parsedMetaData.Rules.Any(combinationRuleMetaData => IsValid(cell, combinationRuleMetaData.MetaData));
     }
 
     private static bool AndRule(Cell cell, JsonElement metaData)
@@ -27,6 +27,6 @@ public partial class CellValidator
             return true;
         }
 
-        return parsedMetaData.Rules.All(combinationRuleMetaData => IsValid(cell, combinationRuleMetaData.MetaData));
+        return parsedMetaData.Rules.Any(combinationRuleMetaData => IsValid(cell, combinationRuleMetaData.MetaData));
     }
 }

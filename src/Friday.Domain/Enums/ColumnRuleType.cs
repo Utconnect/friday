@@ -1,6 +1,6 @@
 ﻿namespace Friday.Domain.Enums;
 
-public enum RuleType
+public enum ColumnRuleType
 {
     And,
     Or,

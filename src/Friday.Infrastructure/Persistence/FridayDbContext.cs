@@ -9,15 +9,18 @@ namespace Friday.Infrastructure.Persistence;
 public class FridayDbContext(
     DbContextOptions<FridayDbContext> options,
     AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor)
-    : DbContext(options), IFridayDbContext
+    : DbContext(options), IUnitOfWork
 {
     public DbSet<Cell> Cells => Set<Cell>();
     public DbSet<CellError> CellErrors => Set<CellError>();
     public DbSet<Column> Columns => Set<Column>();
     public DbSet<ColumnRule> ColumnRules => Set<ColumnRule>();
-    public DbSet<Rule> Rules => Set<Rule>();
+    public DbSet<ColumnRuleDetails> ColumnRuleDetails => Set<ColumnRuleDetails>();
+    public DbSet<DocumentRecord> DocumentRecords => Set<DocumentRecord>();
     public DbSet<Sheet> Sheets => Set<Sheet>();
     public DbSet<Template> Templates => Set<Template>();
+    public DbSet<TemplateRule> TemplateRules => Set<TemplateRule>();
+    public DbSet<TemplateRuleDetails> TemplateRuleDetails => Set<TemplateRuleDetails>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -39,35 +42,62 @@ public class FridayDbContext(
 
     private static void PrePopulate(ModelBuilder builder)
     {
-        builder.Entity<Rule>().HasData(
+        PrePopulateColumnRule(builder);
+        PrePopulateTemplateRule(builder);
+    }
+
+    private static void PrePopulateColumnRule(ModelBuilder builder)
+    {
+        builder.Entity<ColumnRule>().HasData(
         [
-            new Rule
+            new ColumnRule
             {
                 Id = 1,
                 Name = "And",
-                Code = RuleType.And,
+                Code = ColumnRuleType.And,
                 Description = "Combine multiple conditions"
             },
-            new Rule
+            new ColumnRule
             {
                 Id = 2,
                 Name = "Or",
-                Code = RuleType.Or,
+                Code = ColumnRuleType.Or,
                 Description = "At least on of multiple conditions"
             },
-            new Rule
+            new ColumnRule
             {
                 Id = 3,
                 Name = "NotEmpty",
-                Code = RuleType.NotEmpty,
+                Code = ColumnRuleType.NotEmpty,
                 Description = "The field should not be empty"
             },
-            new Rule
+            new ColumnRule
             {
                 Id = 4,
                 Name = "Type",
-                Code = RuleType.DataType,
+                Code = ColumnRuleType.DataType,
                 Description = "The field should not be specific type"
+            }
+        ]);
+    }
+
+    private static void PrePopulateTemplateRule(ModelBuilder builder)
+    {
+        builder.Entity<TemplateRule>().HasData(
+        [
+            new TemplateRule
+            {
+                Id = 1,
+                Name = "ColumnsNumber",
+                Code = TemplateRuleType.ColumnsNumber,
+                Description = "Number of columns"
+            },
+            new TemplateRule
+            {
+                Id = 2,
+                Name = "StartLineNumber",
+                Code = TemplateRuleType.StartLineNumber,
+                Description = "Number of starting line"
             }
         ]);
     }

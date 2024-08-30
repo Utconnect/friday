@@ -14,7 +14,7 @@ public class Column : BaseEntity<int>
     public string? Description { get; set; }
 
     public int TemplateId { get; set; }
-    public virtual Template? Template { get; set; }
+    public Template Template { get; set; } = null!;
 
-    public virtual IEnumerable<ColumnRule> ColumnRules { get; set; } = [];
+    public IEnumerable<ColumnRuleDetails> Rules { get; set; } = [];
 }

@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Friday.Application.Models;
+﻿using Friday.Application.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace Friday.Application.Services.DocumentProcessor;

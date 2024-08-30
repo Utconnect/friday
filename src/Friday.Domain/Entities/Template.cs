@@ -10,6 +10,7 @@ public class Template : BaseAuditableEntity<int>
 
     [MaxLength(100)]
     public required string Name { get; set; }
-    
-    public int ColumnsCount { get; set; }
+
+    public IEnumerable<DocumentRecord> DocumentRecords { get; set; } = [];
+    public IEnumerable<TemplateRuleDetails> Rules { get; set; } = [];
 }

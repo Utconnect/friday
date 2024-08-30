@@ -12,10 +12,10 @@ public class Cell : BaseEntity<int>
     public required string Value { get; set; }
 
     public int? ColumnId { get; set; }
-    public virtual Column? Column { get; set; }
+    public Column? Column { get; set; }
 
     public int SheetId { get; set; }
-    public virtual Sheet? Sheet { get; set; }
+    public Sheet Sheet { get; set; } = null!;
 
-    public virtual IEnumerable<CellError> Errors { get; set; } = [];
+    public IEnumerable<CellError> Errors { get; set; } = [];
 }
