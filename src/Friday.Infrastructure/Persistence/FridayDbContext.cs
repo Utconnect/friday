@@ -3,10 +3,11 @@ using Friday.Domain.Entities;
 using Friday.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Utconnect.Common.Infrastructure.Db.Interceptors;
+using Utconnect.Common.Infrastructure.Db.Persistence;
 
 namespace Friday.Infrastructure.Persistence;
 
-public class FridayDbContext(
+internal class FridayDbContext(
     DbContextOptions<FridayDbContext> options,
     AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor)
     : DbContext(options), IUnitOfWork

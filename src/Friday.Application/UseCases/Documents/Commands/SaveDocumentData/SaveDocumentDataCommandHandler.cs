@@ -3,6 +3,7 @@ using Friday.Application.Services.DocumentProcessor;
 using Friday.Domain.Entities;
 using Friday.Infrastructure.Repositories.Abstracts;
 using MediatR;
+using Utconnect.Common.Infrastructure.Db.Persistence;
 using Utconnect.Common.MediatR.Abstractions;
 using Utconnect.Common.Models;
 using Utconnect.Common.Models.Errors;
@@ -10,6 +11,7 @@ using Utconnect.Common.Models.Errors;
 namespace Friday.Application.UseCases.Documents.Commands.SaveDocumentData;
 
 internal class SaveDocumentDataCommandHandler(
+    IUnitOfWork unitOfWork,
     ICellRepository cellRepository,
     IColumnRepository columnRepository,
     IDocumentRecordRepository documentRecordRepository,
@@ -39,7 +41,7 @@ internal class SaveDocumentDataCommandHandler(
 
         List<Column> columns = columnRepository.FindByTemplateId(template.Id).ToList();
 
-        for (int i = 0; i < documentData.Sheets.Count; i++)
+        for (var i = 0; i < documentData.Sheets.Count; i++)
         {
             Guid sheetId = Guid.NewGuid();
 
@@ -62,6 +64,8 @@ internal class SaveDocumentDataCommandHandler(
             await cellRepository.AddRangeAsync(cellsToAdd, cancellationToken);
         }
 
-        return Result<Guid>.Succeed(documentRecordId);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return Result.Succeed(documentRecordId);
     }
 }
