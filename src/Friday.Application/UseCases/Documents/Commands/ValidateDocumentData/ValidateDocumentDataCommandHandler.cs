@@ -7,20 +7,22 @@ using Utconnect.Common.Models;
 
 namespace Friday.Application.UseCases.Documents.Commands.ValidateDocumentData;
 
-internal class ValidateDocumentDataCommandHandler(ICellRepository cellRepository, ICellValidator cellValidator)
+internal class ValidateDocumentDataCommandHandler(
+    ICellRepository cellRepository,
+    ICellErrorRepository cellErrorRepository,
+    ICellValidator cellValidator)
     : Validatable, IRequestHandler<ValidateDocumentDataCommand, Result>
 {
     public async Task<Result> Handle(ValidateDocumentDataCommand request, CancellationToken cancellationToken)
     {
         IEnumerable<Cell> cells = cellRepository.FindByDocumentRecordId(request.DocumentRecordId);
-        List<CellError> cellErrors = [];
 
         foreach (Cell cell in cells)
         {
             List<CellError>? errors = cellValidator.Validate(cell);
             if (errors is { Count: > 0 })
             {
-                cellErrors.AddRange(errors);
+                await cellErrorRepository.AddRangeAsync(errors, cancellationToken);
             }
         }
 

@@ -12,6 +12,7 @@ public static class ConfigureServices
     {
         services.AddUnitOfWork<FridayDbContext>();
         services.AddTransient<ICellRepository, CellRepository>();
+        services.AddTransient<ICellErrorRepository, CellErrorRepository>();
         services.AddTransient<IColumnRepository, ColumnRepository>();
         services.AddTransient<IDocumentRecordRepository, DocumentRecordRepository>();
         services.AddTransient<ISheetRepository, SheetRepository>();
