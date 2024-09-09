@@ -41,7 +41,7 @@ internal class SaveDocumentDataCommandHandler(
 
         List<Column> columns = columnRepository.FindByTemplateId(template.Id).ToList();
 
-        for (int i = 0; i < documentData.Sheets.Count; i++)
+        for (var i = 0; i < documentData.Sheets.Count; i++)
         {
             Guid sheetId = Guid.NewGuid();
 
